@@ -1,0 +1,23 @@
+name: Build ZIP archive
+
+on:
+  push:
+    branches: [ 'main' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: 'Create archive: All'
+        run: zip -rq9 Faithful-x32-1.12-all.zip pack.mcmeta pack.png assets
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: archives
+          path: Faithful-*.zip
+          if-no-files-found: error
